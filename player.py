@@ -6,6 +6,7 @@ class Player(object):
     def __init__(self, media_dir):
         self.media_dir = media_dir
         self.player = None
+        self.subtitles = True
 
     def play(self, filename):
         if self.player:
@@ -27,10 +28,21 @@ class Player(object):
     def set_volume(self, val):
         self.player.set_volume(val)
 
+    def toggle_subtitles(self, val):
+        if self.subtitles:
+            self.player.hide_subtitles()
+        else:
+            self.player.show_subtitles()
+        self.subtitles = not self.subtitles
+
+    def set_subtitle_track(self, val):
+        self.player.select_subtitle(val)
+
     @property
     def status(self):
         return {
             'time': int(self.player.position()),
             'length': int(self.player.duration()),
-            'volume': int(self.player.volume())
+            'volume': int(self.player.volume()),
+            'subtitle_tracks': self.player.list_subtitles()
         }

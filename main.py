@@ -13,9 +13,16 @@ def root():
     return render_template('root.html')
 
 
-@app.route('/list_shows')
-def list_shows():
-    files = [i for i in os.listdir(media_dir) if not i.endswith('srt')]
+@app.route('/list_shows/<path:path>')
+def list_shows(path=''):
+    files = [
+        {
+            'file': path + i,
+            'is_dir': os.path.isdir(media_dir + path + i)
+        }
+        for i in os.listdir(media_dir)
+        if not i.endswith('.srt')
+    ]
     return render_template('list_shows.html', files=files)
 
 
@@ -40,6 +47,12 @@ def control():
 
     if args.get('volume'):
         player.set_volume(int(args.get('volume')))
+
+    if args.get('subtitle'):
+        if args.get('subtitle', '').isdigit():
+            player.set_subtitle_track(int(args.get('subtitle')))
+        else:
+            player.toggle_subtitles()
 
     return render_template(
         'control.html',
