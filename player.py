@@ -5,6 +5,7 @@ from pathlib import Path
 class Player(object):
     def __init__(self, media_dir):
         self.media_dir = media_dir
+        self.player = None
 
     def play(self, filename):
         if self.player:
