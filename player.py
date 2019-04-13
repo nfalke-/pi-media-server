@@ -24,9 +24,13 @@ class Player(object):
     def seek(self, val):
         self.player.set_position(val)
 
+    def set_volume(self, val):
+        self.player.set_volume(val)
+
     @property
     def status(self):
         return {
             'time': int(self.player.position()),
-            'length': int(self.player.duration())
+            'length': int(self.player.duration()),
+            'volume': int(self.player.volume())
         }

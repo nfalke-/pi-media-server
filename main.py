@@ -38,6 +38,9 @@ def control():
     if args.get('seek'):
         player.seek(int(args.get('seek')))
 
+    if args.get('volume'):
+        player.set_volume(int(args.get('volume')))
+
     return render_template(
         'control.html',
         length=player.status['length']
