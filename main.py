@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, url_for, redirect
 from player import Player
 import os
 app = Flask(__name__)
-media_dir = '../media'
+media_dir = '../media/'
 player = Player(port='8080', password='temp', media_dir=media_dir)
 
 
