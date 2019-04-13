@@ -1,60 +1,30 @@
-from subprocess import Popen
-import requests
+from omxplayer.player import OMXPlayer
+from pathlib import Path
 
 
 class Player(object):
-    def __init__(self, port, password, media_dir):
-        self.proc = None
-        self.port = port
-        self.base = 'http://localhost:'+self.port
-        self.path = '/requests/status.json'
-
+    def __init__(self, media_dir):
         self.media_dir = media_dir
-        self.password = password
-        self.auth = ('', password)
-        return
 
     def play(self, filename):
-        command = []
-        command += [
-            'vlc', '-f',
-            self.media_dir + filename
-        ]
-        command += [
-            '-I', 'http',
-            '--http-password', self.password,
-            '--http-port', self.port,
-        ]
-        self.proc = Popen(command)
+        if self.player:
+            self.player.quit()
+            self.player = None
+        video_path = Path(self.media_dir + filename)
+        self.player = OMXPlayer(video_path)
 
     def quit(self):
-        self.proc.kill()
-        self.proc = None
+        self.player.quit()
+        self.player = None
 
     def pause(self):
-        args = {
-            'command': 'pl_pause'
-        }
-        requests.get(
-            self.base+self.path,
-            params=args,
-            auth=self.auth
-        )
+        self.player.pause()
 
     def seek(self, val):
-        args = {
-            'command': 'seek',
-            'val': val
-        }
-        requests.get(
-            self.base+self.path,
-            params=args,
-            auth=self.auth
-        )
+        self.player.set_position(val)
 
     @property
     def status(self):
-        return requests.get(
-            self.base+self.path,
-            auth=self.auth
-        ).json()
+        return {
+            'time': self.player.position()
+        }

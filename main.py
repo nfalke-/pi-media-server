@@ -4,7 +4,7 @@ import json
 import os
 app = Flask(__name__)
 media_dir = '../media/'
-player = Player(port='8080', password='temp', media_dir=media_dir)
+player = Player(media_dir=media_dir)
 
 
 @app.route('/')
