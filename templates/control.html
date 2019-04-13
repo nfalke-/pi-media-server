@@ -3,9 +3,13 @@
     <script language="javascript" type="text/javascript">
         var timeout = setInterval(updateSeek, 5000);
         function updateSeek() {
-            $.getJSON('/status', funciton(result){
-                $("#slider").slider("value", result.time);
-            })
+            $.getJSON(
+                '/status',
+                (result) => {
+                    console.log(result.time)
+                    $("#slider").slider("value", result.time);
+                }
+            );
         }
         function updateSlider(slideAmount) {
             console.log(slideAmount)
