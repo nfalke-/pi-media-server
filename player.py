@@ -42,3 +42,11 @@ class Player(object):
 
     def seek(self):
         pass
+
+    @property
+    def status(self):
+        path = '/requests/status.json'
+        return requests.get(
+            self.base+path,
+            auth=self.auth
+        ).json()

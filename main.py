@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, url_for, redirect
 from player import Player
+import json
 import os
 app = Flask(__name__)
 media_dir = '../media/'
@@ -16,6 +17,11 @@ def root():
 def list_shows():
     files = [i for i in os.listdir(media_dir) if not i.endswith('srt')]
     return render_template('list_shows.html', files=files)
+
+
+@app.route('status')
+def status():
+    return json.dumps(player.status)
 
 
 @app.route('/control')
