@@ -21,7 +21,7 @@
     <input type="button" value="pause" onclick="control({ pause: true })">
     <br/>
     <span>volume</span>
-    <input id="slider" type="range" min="0" max="{{ length }}" value="0" onchange="control({ volume: this.value })">
+    <input id="slider" type="range" min="0" max="10" value="0" onchange="control({ volume: this.value })">
     <br/>
     <span>seek</span>
     <input id="slider" type="range" min="0" max="{{ length }}" value="0" onchange="control({ seek: this.value })">
