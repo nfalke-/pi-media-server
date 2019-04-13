@@ -18,13 +18,6 @@ def list_shows():
     return render_template('list_shows.html', files=files)
 
 
-@app.route('/list_subtitles')
-def list_subtitles():
-    args = request.args
-    files = [i for i in os.listdir(media_dir) if i.endswith('srt')]
-    return render_template('list_subtitles.html', video=args.get('file'), files=files)
-
-
 @app.route('/control')
 def control():
     args = request.args
@@ -42,8 +35,7 @@ def control():
 @app.route('/run')
 def run():
     video = request.args.get('file')
-    subtitle = request.args.get('subtitle')
     if not video:
         return "please supply a file"
-    player.play(video, subtitle)
+    player.play(video)
     return redirect(url_for('control'))

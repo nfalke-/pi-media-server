@@ -12,7 +12,7 @@ class Player(object):
         self.auth = ('', password)
         return
 
-    def play(self, filename, subtitle_file):
+    def play(self, filename):
         command = []
         command += [
             'vlc', '-f',
@@ -23,10 +23,6 @@ class Player(object):
             '--http-password', self.password,
             '--http-port', self.port,
         ]
-        if subtitle_file:
-            command += [
-                '--sub-file', self.media_dir+subtitle_file,
-            ]
         self.proc = Popen(command)
 
     def quit(self):
