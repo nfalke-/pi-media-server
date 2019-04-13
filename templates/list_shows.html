@@ -1,0 +1,11 @@
+<head>
+</head>
+<body>
+	{% for file in files %}
+		<li>
+			<a href="/list_subtitles?file={{ file }}">
+				{{ file }}
+			</a>
+		</li>
+	{% endfor %}
+</body>
