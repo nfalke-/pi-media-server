@@ -36,7 +36,7 @@ def control():
         player.pause()
 
     if args.get('seek'):
-        player.seek(args.get('seek'))
+        player.seek(int(args.get('seek')))
 
     return render_template(
         'control.html',
