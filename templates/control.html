@@ -1,6 +1,28 @@
 <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+        var timeout = setInterval(updateSeek, 1000);
+        function updateSeek() {
+            $.getJSON(
+                '/status',
+                (result) => {
+                    $("#slider").val(result.time);
+                }
+            );
+        }
+        function updateSlider(slideAmount) {
+            $.get( "/control", { seek: slideAmount } );
+        }
+    </script>
 </head>
 <body>
     <a href='/control?quit=True'>quit</a>
     <a href='/control?pause=True'>pause</a>
+
+    <input
+        id="slider"
+        type="range" min="0" max="{{ length }}"
+        value="0"
+        onchange="updateSlider(this.value)"
+        >
 </body>

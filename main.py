@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, url_for, redirect
 from player import Player
+import json
 import os
 app = Flask(__name__)
 media_dir = '../media/'
@@ -18,6 +19,11 @@ def list_shows():
     return render_template('list_shows.html', files=files)
 
 
+@app.route('/status')
+def status():
+    return json.dumps(player.status)
+
+
 @app.route('/control')
 def control():
     args = request.args
@@ -29,7 +35,13 @@ def control():
     if args.get('pause'):
         player.pause()
 
-    return render_template('control.html')
+    if args.get('seek'):
+        player.seek(args.get('seek'))
+
+    return render_template(
+        'control.html',
+        length=player.status['length']
+    )
 
 
 @app.route('/run')
