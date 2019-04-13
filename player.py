@@ -7,6 +7,8 @@ class Player(object):
         self.proc = None
         self.port = port
         self.base = 'http://localhost:'+self.port
+        self.path = '/requests/status.json'
+
         self.media_dir = media_dir
         self.password = password
         self.auth = ('', password)
@@ -30,23 +32,29 @@ class Player(object):
         self.proc = None
 
     def pause(self):
-        path = '/requests/status.json'
         args = {
             'command': 'pl_pause'
         }
         requests.get(
-            self.base+path,
+            self.base+self.path,
             params=args,
             auth=self.auth
         )
 
-    def seek(self):
-        pass
+    def seek(self, val):
+        args = {
+            'command': 'seek',
+            'val': val
+        }
+        requests.get(
+            self.base+self.path,
+            params=args,
+            auth=self.auth
+        )
 
     @property
     def status(self):
-        path = '/requests/status.json'
         return requests.get(
-            self.base+path,
+            self.base+self.path,
             auth=self.auth
         ).json()

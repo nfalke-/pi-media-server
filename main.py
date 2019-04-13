@@ -35,6 +35,9 @@ def control():
     if args.get('pause'):
         player.pause()
 
+    if args.get('seek'):
+        player.seek(args.get('seek'))
+
     return render_template(
         'control.html',
         length=player.status['length']
