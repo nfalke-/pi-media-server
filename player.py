@@ -7,6 +7,7 @@ class Player(object):
         self.proc = None
         self.port = port
         self.base = 'http://localhost:'+self.port
+        self.media_dir = '../media'
         self.password = password
         self.auth = ('', password)
         return
@@ -15,7 +16,7 @@ class Player(object):
         command = []
         command += [
             'vlc', '-f',
-            './media/' + filename
+            self.media_dir + filename
         ]
         command += [
             '-I', 'http',
@@ -24,7 +25,7 @@ class Player(object):
         ]
         if subtitle_file:
             command += [
-                '--sub-file', './media/'+subtitle_file,
+                '--sub-file', self.media_dir+subtitle_file,
             ]
         self.proc = Popen(command)
 
@@ -42,3 +43,6 @@ class Player(object):
             params=args,
             auth=self.auth
         )
+
+    def seek(self):
+        pass

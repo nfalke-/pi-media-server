@@ -13,18 +13,14 @@ def root():
 
 @app.route('/list_shows')
 def list_shows():
-    files = [
-        i for i in os.listdir('./media') if not i.endswith('srt')
-    ]
+    files = [i for i in os.listdir('./media') if not i.endswith('srt')]
     return render_template('list_shows.html', files=files)
 
 
 @app.route('/list_subtitles')
 def list_subtitles():
     args = request.args
-    files = [
-        i for i in os.listdir('./media') if i.endswith('srt')
-    ]
+    files = [i for i in os.listdir('./media') if i.endswith('srt')]
     return render_template('list_subtitles.html', video=args.get('file'), files=files)
 
 
