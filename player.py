@@ -27,5 +27,6 @@ class Player(object):
     @property
     def status(self):
         return {
-            'time': self.player.position()
+            'time': int(self.player.position()),
+            'length': int(self.player.duration())
         }
