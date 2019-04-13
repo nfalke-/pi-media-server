@@ -7,7 +7,7 @@
                 '/status',
                 (result) => {
                     console.log(result.time)
-                    $("#slider").slider("value", result.time);
+                    $("#slider").val(result.time);
                 }
             );
         }

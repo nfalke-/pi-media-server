@@ -35,7 +35,10 @@ def control():
     if args.get('pause'):
         player.pause()
 
-    return render_template('control.html')
+    return render_template(
+        'control.html',
+        length=player.status['length']
+    )
 
 
 @app.route('/run')
