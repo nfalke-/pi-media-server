@@ -3,11 +3,11 @@ import requests
 
 
 class Player(object):
-    def __init__(self, port, password):
+    def __init__(self, port, password, media_dir):
         self.proc = None
         self.port = port
         self.base = 'http://localhost:'+self.port
-        self.media_dir = '../media'
+        self.media_dir = media_dir
         self.password = password
         self.auth = ('', password)
         return
