@@ -19,7 +19,7 @@ def list_shows():
     return render_template('list_shows.html', files=files)
 
 
-@app.route('status')
+@app.route('/status')
 def status():
     return json.dumps(player.status)
 
