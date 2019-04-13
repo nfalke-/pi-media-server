@@ -19,7 +19,7 @@ class Player(object):
         self.player = None
 
     def pause(self):
-        self.player.pause()
+        self.player.play_pause()
 
     def seek(self, val):
         self.player.set_position(val)
