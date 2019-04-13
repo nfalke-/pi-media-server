@@ -21,7 +21,7 @@ def list_shows(path=''):
             'file': path + i,
             'is_dir': os.path.isdir(media_dir + path + i)
         }
-        for i in os.listdir(media_dir)
+        for i in os.listdir(media_dir + path)
         if not i.endswith('.srt')
     ]
     return render_template('list_shows.html', files=files)
