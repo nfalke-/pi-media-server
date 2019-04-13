@@ -4,10 +4,12 @@
     {% for file in files %}
     <li>
         {% if file['is_dir'] %}
-            <a href="/list_shows/{{ file }}/">
+            <a href="/list_shows/{{ file['file'] }}/">
+                {{ file['file'] }}
+            </a>
         {% else %}
-            <a href="/run?file={{ file }}">
-                {{ file }}
+            <a href="/run?file={{ file['file'] }}">
+                {{ file['file'] }}
             </a>
         {% endif %}
     </li>

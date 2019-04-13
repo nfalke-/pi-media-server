@@ -13,6 +13,7 @@ def root():
     return render_template('root.html')
 
 
+@app.route('/list_shows')
 @app.route('/list_shows/<path:path>')
 def list_shows(path=''):
     files = [
