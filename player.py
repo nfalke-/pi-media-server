@@ -12,7 +12,7 @@ class Player(object):
             self.player.quit()
             self.player = None
         video_path = Path(self.media_dir + filename)
-        self.player = OMXPlayer(video_path)
+        self.player = OMXPlayer(video_path, args=['--no-osd'])
 
     def quit(self):
         self.player.quit()
