@@ -1,5 +1,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <style>
         .slidecontainer {
           width: 100%;
@@ -35,9 +37,16 @@
           background: #660000;
           cursor: pointer;
         }
+
+        .dot {
+          height: 25px;
+          width: 25px;
+          background-color: #bbb;
+          border-radius: 100%;
+          display: inline-block;
+        }
     </style>
 
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         var timeout = setInterval(updateSeek, 1000);
         function updateSeek() {
@@ -55,9 +64,9 @@
     </script>
 </head>
 <body>
-    <a href='/control?quit=True'>quit</a>
+    <a href='/control?quit=True'><div class="button">X</div></a>
     <br/>
-    <input type="button" value="pause" onclick="control({ pause: true })">
+    <div class="button" onclick="control({ pause: true })"><i class="material-icons">pause</i></div>
     <br/>
     <span>volume</span>
     <input class="slider" id="volume_slider" type="range" min="0" max="10" value="0" onchange="control({ volume: this.value })">
