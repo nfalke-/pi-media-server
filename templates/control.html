@@ -55,7 +55,7 @@
           -webkit-box-shadow: 0 @shadow-length 0 0 @shadow;
                   box-shadow: 0 @shadow-length 0 0 @shadow;
           text-shadow: 0 @shadow-length 0 @shadow;
-          background: #38a9e4;
+          background: #660000;
           color: white;
           font-family: Helvetica, Arial Black, sans;
           font-size: 48px;
@@ -80,8 +80,12 @@
     </script>
 </head>
 <body>
+    <div class=wrapper>
     <a href='/control?quit=True'><div class="button">X</div></a>
+    </div>
+    <div class=wrapper>
     <div class="button" onclick="control({ pause: true })"><i class="material-icons">pause</i></div>
+    </div>
     <br/>
     <span>volume</span>
     <input class="slider" id="volume_slider" type="range" min="0" max="10" value="0" onchange="control({ volume: this.value })">
