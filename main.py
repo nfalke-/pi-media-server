@@ -16,7 +16,7 @@ def root():
 @app.route('/list_shows')
 @app.route('/list_shows/<path:path>')
 def list_shows(path=''):
-    files = [
+    files = sorted([
         {
             'file': path + i,
             'is_dir': os.path.isdir(media_dir + path + i),
@@ -24,7 +24,7 @@ def list_shows(path=''):
         }
         for i in os.listdir(media_dir + path)
         if not i.endswith('.srt')
-    ]
+    ], key=lambda x: x['display_name'])
     return render_template('list_shows.html', files=files)
 
 
