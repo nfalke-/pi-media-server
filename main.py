@@ -19,7 +19,8 @@ def list_shows(path=''):
     files = [
         {
             'file': path + i,
-            'is_dir': os.path.isdir(media_dir + path + i)
+            'is_dir': os.path.isdir(media_dir + path + i),
+            'display_name': i.replace('_', ' ')
         }
         for i in os.listdir(media_dir + path)
         if not i.endswith('.srt')

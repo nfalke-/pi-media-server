@@ -22,13 +22,13 @@
         {% if file['is_dir'] %}
             <a href="/list_shows/{{ file['file'] }}/" class="list-link">
                 <div class="list-item">
-                {{ file['file'] }}
+                    {{ file['display_name'] }}
                 </div>
             </a>
         {% else %}
             <a href="/run?file={{ file['file'] }}" class="list-link">
                 <div class="list-item">
-                {{ file['file'] }}
+                    {{ file['display_name'] }}
                 </div>
             </a>
         {% endif %}
