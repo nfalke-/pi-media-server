@@ -28,7 +28,7 @@ class Player(object):
     def set_volume(self, val):
         self.player.set_volume(val)
 
-    def toggle_subtitles(self, val):
+    def toggle_subtitles(self):
         if self.subtitles:
             self.player.hide_subtitles()
         else:
