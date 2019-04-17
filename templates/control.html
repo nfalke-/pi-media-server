@@ -59,6 +59,13 @@
             right: 0%;
             top: 65%;
         }
+
+        .subtitle-control-wrapper {
+            position: absolute;
+            width: 20%;
+            right: 5px;
+            top: 5px;
+        }
     </style>
 
     <style>
@@ -123,41 +130,51 @@
             </div>
         </div>
     </a>
-    <div class="bottom-half">
-    <div class="control-wrapper">
-        <div class="button-control-wrapper">
-            <div class="play-button" onclick='control({ seek: "-5" })'>
-                <div class="round-button-circle">
-                    <div class="round-button-inner">
-                        <i class="material-icons">fast_rewind</i>
-                    </div>
-                </div>
-            </div>
-            <div class="play-button" onclick="control({ pause: true })">
-                <div class="round-button-circle">
-                    <div class="round-button-inner">
-                        <i class="material-icons">pause</i>
-                    </div>
-                </div>
-            </div>
-            <div class="play-button" onclick='control({ seek: "+5" })'>
-                <div class="round-button-circle">
-                    <div class="round-button-inner">
-                        <i class="material-icons">fast_forward</i>
-                    </div>
+    <div class=subtitle-control-wrapper>
+        <div class="play-button" onclick='control({ subtitles: true })'>
+            <div class="round-button-circle">
+                <div class="round-button-inner">
+                    <i class="material-icons">subtitles</i>
                 </div>
             </div>
         </div>
-        <input 
-            class="slider" id="seek_slider" type="range"
-            min="0" max="{{ length }}" value="0" onchange="control({ seek: this.value })"
-            >
     </div>
+
+    <div class="bottom-half">
+        <div class="control-wrapper">
+            <div class="button-control-wrapper">
+                <div class="play-button" onclick='control({ seek: "-5" })'>
+                    <div class="round-button-circle">
+                        <div class="round-button-inner">
+                            <i class="material-icons">fast_rewind</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="play-button" onclick="control({ pause: true })">
+                    <div class="round-button-circle">
+                        <div class="round-button-inner">
+                            <i class="material-icons">pause</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="play-button" onclick='control({ seek: "+5" })'>
+                    <div class="round-button-circle">
+                        <div class="round-button-inner">
+                            <i class="material-icons">fast_forward</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input 
+                class="slider" id="seek_slider" type="range"
+                min="0" max="{{ length }}" value="0" onchange="control({ seek: this.value })"
+                >
+        </div>
         <div class=volume-control-wrapper>
             <input 
                 class="slider" id="volume_slider" type="range" orient=vertical
                 min="0" max="10" value="0" onchange="control({ volume: this.value })"
             >
-        <div>
         </div>
+    </div>
 </body>
