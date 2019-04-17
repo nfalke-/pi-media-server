@@ -37,6 +37,11 @@ def status():
 def control():
     args = request.args
 
+    return render_template(
+        'control.html',
+        length=100
+    )
+
     if args.get('quit'):
         player.quit()
         return redirect(url_for('list_shows'))
@@ -45,7 +50,13 @@ def control():
         player.pause()
 
     if args.get('seek'):
-        player.seek(int(args.get('seek')))
+        if args.get('seek', '').isdigit():
+            player.seek(int(args.get('seek')))
+        else:
+            if args.get('seek')[0] == '+':
+                player.seek(player.status + int(args.get('seek')[1:]))
+            elif args.get('seek')[0] == '-':
+                player.seek(player.status - int(args.get('seek')[1:]))
 
     if args.get('volume'):
         player.set_volume(int(args.get('volume')))
