@@ -49,9 +49,9 @@ def control():
             player.seek(int(args.get('seek')))
         else:
             if args.get('seek')[0] == '+':
-                player.seek(player.status + int(args.get('seek')[1:]))
+                player.seek(player.status['time'] + int(args.get('seek')[1:]))
             elif args.get('seek')[0] == '-':
-                player.seek(player.status - int(args.get('seek')[1:]))
+                player.seek(player.status['time'] - int(args.get('seek')[1:]))
 
     if args.get('volume'):
         player.set_volume(int(args.get('volume')))
