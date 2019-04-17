@@ -37,11 +37,6 @@ def status():
 def control():
     args = request.args
 
-    return render_template(
-        'control.html',
-        length=100
-    )
-
     if args.get('quit'):
         player.quit()
         return redirect(url_for('list_shows'))
