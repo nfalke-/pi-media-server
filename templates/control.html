@@ -150,13 +150,13 @@
         </div>
         <input 
             class="slider" id="seek_slider" type="range"
-            min="0" max="100" value="0" onchange="control({ seek: this.value })"
+            min="0" max="{{ length }}" value="0" onchange="control({ seek: this.value })"
             >
     </div>
         <div class=volume-control-wrapper>
             <input 
                 class="slider" id="volume_slider" type="range" orient=vertical
-                min="0" max="{{ length }}" value="0" onchange="control({ volume: this.value })"
+                min="0" max="10" value="0" onchange="control({ volume: this.value })"
             >
         <div>
         </div>
