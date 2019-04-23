@@ -1,60 +1,48 @@
-from subprocess import Popen
-import requests
+from omxplayer.player import OMXPlayer
+from pathlib import Path
 
 
 class Player(object):
-    def __init__(self, port, password, media_dir):
-        self.proc = None
-        self.port = port
-        self.base = 'http://localhost:'+self.port
-        self.path = '/requests/status.json'
-
+    def __init__(self, media_dir):
         self.media_dir = media_dir
-        self.password = password
-        self.auth = ('', password)
-        return
+        self.player = None
+        self.subtitles = True
 
     def play(self, filename):
-        command = []
-        command += [
-            'vlc', '-f',
-            self.media_dir + filename
-        ]
-        command += [
-            '-I', 'http',
-            '--http-password', self.password,
-            '--http-port', self.port,
-        ]
-        self.proc = Popen(command)
+        if self.player:
+            self.player.quit()
+            self.player = None
+        video_path = Path(self.media_dir + filename)
+        self.player = OMXPlayer(video_path, args=['--no-osd'])
 
     def quit(self):
-        self.proc.kill()
-        self.proc = None
+        self.player.quit()
+        self.player = None
 
     def pause(self):
-        args = {
-            'command': 'pl_pause'
-        }
-        requests.get(
-            self.base+self.path,
-            params=args,
-            auth=self.auth
-        )
+        self.player.play_pause()
 
     def seek(self, val):
-        args = {
-            'command': 'seek',
-            'val': val
-        }
-        requests.get(
-            self.base+self.path,
-            params=args,
-            auth=self.auth
-        )
+        self.player.set_position(val)
+
+    def set_volume(self, val):
+        self.player.set_volume(val)
+
+    def toggle_subtitles(self):
+        if self.subtitles:
+            self.player.hide_subtitles()
+        else:
+            self.player.show_subtitles()
+        self.subtitles = not self.subtitles
+
+    def set_subtitle_track(self, val):
+        self.player.select_subtitle(val)
 
     @property
     def status(self):
-        return requests.get(
-            self.base+self.path,
-            auth=self.auth
-        ).json()
+        return {
+            'time': int(self.player.position()),
+            'length': int(self.player.duration()),
+            'volume': int(self.player.volume()),
+            'subtitle_tracks': self.player.list_subtitles()
+        }

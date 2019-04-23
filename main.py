@@ -4,7 +4,7 @@ import json
 import os
 app = Flask(__name__)
 media_dir = '../media/'
-player = Player(port='8080', password='temp', media_dir=media_dir)
+player = Player(media_dir=media_dir)
 
 
 @app.route('/')
@@ -14,8 +14,17 @@ def root():
 
 
 @app.route('/list_shows')
-def list_shows():
-    files = [i for i in os.listdir(media_dir) if not i.endswith('srt')]
+@app.route('/list_shows/<path:path>')
+def list_shows(path=''):
+    files = sorted([
+        {
+            'file': path + i,
+            'is_dir': os.path.isdir(media_dir + path + i),
+            'display_name': i.replace('_', ' ')
+        }
+        for i in os.listdir(media_dir + path)
+        if not i.endswith('.srt')
+    ], key=lambda x: x['display_name'])
     return render_template('list_shows.html', files=files)
 
 
@@ -36,7 +45,22 @@ def control():
         player.pause()
 
     if args.get('seek'):
-        player.seek(args.get('seek'))
+        if args.get('seek', '').isdigit():
+            player.seek(int(args.get('seek')))
+        else:
+            if args.get('seek')[0] == '+':
+                player.seek(player.status['time'] + int(args.get('seek')[1:]))
+            elif args.get('seek')[0] == '-':
+                player.seek(player.status['time'] - int(args.get('seek')[1:]))
+
+    if args.get('volume'):
+        player.set_volume(int(args.get('volume')))
+
+    if args.get('subtitle'):
+        if args.get('subtitle', '').isdigit():
+            player.set_subtitle_track(int(args.get('subtitle')))
+        else:
+            player.toggle_subtitles()
 
     return render_template(
         'control.html',
