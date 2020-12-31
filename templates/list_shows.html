@@ -9,28 +9,26 @@
           margin-bottom: 5px;
           width: 90%;
           height: 20px;
-        }
-
-        .list-link {
           font-size: 20px;
           color: #FFFFFF;
           text-decoration: none;
+          display:block;
         }
+        .list-item:visited {
+	  background:black;
+        }
+
     </style>
 </head>
 <body>
     {% for file in files %}
         {% if file['is_dir'] %}
-            <a href="/list_shows/{{ file['file'] }}/" class="list-link">
-                <div class="list-item">
-                    {{ file['display_name'] }}
-                </div>
+            <a href="/list_shows/{{ file['file'] }}/" class="list-item">
+		    {{ file['display_name'] }}
             </a>
         {% else %}
-            <a href="/run?file={{ file['file'] }}" class="list-link">
-                <div class="list-item">
+            <a href="/run?file={{ file['file'] }}" class="list-item">
                     {{ file['display_name'] }}
-                </div>
             </a>
         {% endif %}
     {% endfor %}
