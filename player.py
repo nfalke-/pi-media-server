@@ -40,9 +40,16 @@ class Player(object):
 
     @property
     def status(self):
+        if self.player != None:
+            return {
+                'time': int(self.player.position()),
+                'length': int(self.player.duration()),
+                'volume': int(self.player.volume()),
+                'subtitle_tracks': self.player.list_subtitles()
+            }
         return {
-            'time': int(self.player.position()),
-            'length': int(self.player.duration()),
-            'volume': int(self.player.volume()),
-            'subtitle_tracks': self.player.list_subtitles()
+            'time': 0,
+            'length': 0,
+            'volume': 0,
+            'subtitle_tracks': []
         }
