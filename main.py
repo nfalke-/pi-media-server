@@ -12,6 +12,18 @@ def root():
     return redirect(url_for('list_shows'))
     return render_template('root.html')
 
+@app.route('/list_shows.json')
+def list_shows_json():
+    path = request.args.get('path') or ''
+    return json.dumps(sorted([
+        {
+            'file': path + i,
+            'is_dir': os.path.isdir(media_dir + path + i),
+            'display_name': i.replace('_', ' ').split('.')[0]
+        }
+        for i in os.listdir(media_dir + path)
+        if not i.endswith('.srt')
+    ], key=lambda x: x['display_name']))
 
 @app.route('/list_shows')
 @app.route('/list_shows/<path:path>')
@@ -20,7 +32,7 @@ def list_shows(path=''):
         {
             'file': path + i,
             'is_dir': os.path.isdir(media_dir + path + i),
-            'display_name': i.replace('_', ' ')
+            'display_name': i.replace('_', ' ').split('.')[0]
         }
         for i in os.listdir(media_dir + path)
         if not i.endswith('.srt')
@@ -30,6 +42,38 @@ def list_shows(path=''):
 
 @app.route('/status')
 def status():
+    return json.dumps(player.status)
+
+
+@app.route('/control.json')
+def control_json():
+    args = request.args
+
+    if args.get('quit'):
+        player.quit()
+        return redirect(url_for('list_shows'))
+
+    if args.get('pause'):
+        player.pause()
+
+    if args.get('seek'):
+        if args.get('seek', '').isdigit():
+            player.seek(int(args.get('seek')))
+        else:
+            if args.get('seek')[0] == '+':
+                player.seek(player.status['time'] + int(args.get('seek')[1:]))
+            elif args.get('seek')[0] == '-':
+                player.seek(player.status['time'] - int(args.get('seek')[1:]))
+
+    if args.get('volume'):
+        player.set_volume(int(args.get('volume')))
+
+    if args.get('subtitle'):
+        if args.get('subtitle', '').isdigit():
+            player.set_subtitle_track(int(args.get('subtitle')))
+        else:
+            player.toggle_subtitles()
+
     return json.dumps(player.status)
 
 
